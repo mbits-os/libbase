@@ -1,0 +1,28 @@
+pch.h
+pch.cpp=pch:1
+
+includes/config.hpp
+includes/crypt.hpp
+includes/filesystem.hpp
+includes/getopt.hpp
+includes/mt.hpp
+includes/uri.hpp
+includes/utils.hpp
+
+src/config.cpp
+src/crypt.cpp
+src/filesystem.cpp
+src/mt.cpp
+src/time_utils.cpp
+src/url_utils.cpp
+
+#ifdef POSIX
+src/filesystem_posix.cpp
+src/mt_posix.cpp
+#endif
+#ifdef WIN32
+src/filesystem_posix.cpp=exclude:*|*
+src/filesystem_win32.cpp
+src/mt_posix.cpp=exclude:*|*
+src/mt_win32.cpp
+#endif

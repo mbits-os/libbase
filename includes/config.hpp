@@ -26,6 +26,7 @@
 
 #include <string>
 #include <memory>
+#include <vector>
 #include <filesystem.hpp>
 
 namespace config
@@ -42,6 +43,7 @@ namespace config
 			virtual std::string get_string(const std::string& name, const std::string& def_val) const = 0;
 			virtual int get_int(const std::string& name, int def_val) const = 0;
 			virtual bool get_bool(const std::string& name, bool def_val) const = 0;
+			virtual std::vector<std::string> get_keys() const = 0;
 		};
 		typedef std::shared_ptr<section> section_ptr;
 
@@ -49,6 +51,7 @@ namespace config
 		{
 			virtual ~config() {}
 			virtual section_ptr get_section(const std::string& name) = 0;
+			virtual std::vector<std::string> get_keys() const = 0;
 			virtual void set_read_only(bool read_only) = 0;
 		};
 		typedef std::shared_ptr<config> config_ptr;

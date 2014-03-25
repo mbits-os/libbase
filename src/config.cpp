@@ -157,6 +157,16 @@ namespace config
 				return any_cast<bool>(any);
 			}
 
+			std::vector<std::string> get_keys() const override
+			{
+				std::vector<std::string> out;
+				out.reserve(m_values.size());
+				for (auto&& pair : m_values)
+					out.push_back(pair.first);
+
+				return out;
+			}
+
 		private:
 			map_t::iterator find(const std::string& name, bool& store)
 			{
@@ -184,6 +194,7 @@ namespace config
 			bool open(const std::string& path);
 			void store();
 			base::section_ptr get_section(const std::string& name) override;
+			std::vector<std::string> get_keys() const override;
 			void set_read_only(bool read_only) override { m_read_only = read_only; }
 		};
 
@@ -230,7 +241,7 @@ namespace config
 				if (!std::isdigit((unsigned char)c))
 					return false;
 			}
-			return true;
+			return !val.empty();
 		}
 
 		bool config::open(const std::string& path)
@@ -325,6 +336,16 @@ namespace config
 			auto new_sec = std::make_shared<section>(shared_from_this());
 			m_sections.insert(pos, std::make_pair(name, new_sec));
 			return new_sec;
+		}
+
+		std::vector<std::string> config::get_keys() const
+		{
+			std::vector<std::string> out;
+			out.reserve(m_sections.size());
+			for (auto&& pair : m_sections)
+				out.push_back(pair.first);
+
+			return out;
 		}
 	}
 
